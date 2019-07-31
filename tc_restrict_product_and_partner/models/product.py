@@ -13,6 +13,17 @@ class ProductProduct(models.Model):
 
     @api.model
     def create(self, vals):
-        if not vals.get('barcode'):
+        if not vals.get('barcode') and not vals.get('product_tmpl_id'):
             raise UserError(_("Barcode is required for product."))
         return super(ProductProduct, self).create(vals)
+
+
+class ProductTemplate(models.Model):
+    _inherit = "product.template"
+
+    @api.model
+    def create(self, vals):
+        context = dict(self.env.context)
+        if not vals.get('barcode') and not context.get('create_product_product'):
+            raise UserError(_("Barcode is required for product."))
+        return super(ProductTemplate, self).create(vals)
