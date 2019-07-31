@@ -45,7 +45,7 @@ class export_product_with_inventory_file(models.TransientModel):
         #worksheet = workbook.add_worksheet('Products')
         worksheet = workbook.add_sheet('Products')
 
-        headers = ['id','Archive','invoice_policy','purchase_method','categ_id/name','pos_categ_id/name','available_in_pos','name','barcode','default_code','unit_of_measurement','uom_po_id','l10n_mx_edi_code_sat_id','supplier_taxes_id','taxes_id','type','route_ids/id','purchase_ok','sale_ok','standard_price','lst_price','seller_ids/name/name','image_medium']
+        headers = ['id','create_date','Archive','invoice_policy','purchase_method','categ_id/name','pos_categ_id/name','available_in_pos','name','barcode','default_code','unit_of_measurement','uom_po_id','l10n_mx_edi_code_sat_id','supplier_taxes_id','taxes_id','type','route_ids/id','purchase_ok','sale_ok','standard_price','lst_price','seller_ids/name/name','image_medium']
         warehouse_ids = []
         product_obj = self.env['product.product']
         product_ids = products.ids
@@ -108,6 +108,8 @@ class export_product_with_inventory_file(models.TransientModel):
                 l10n_mx_edi_code_sat_id = ''
             i=0
             worksheet.write(row_index, i, product_xml_ids.get(product.id))
+            i +=1
+            worksheet.write(row_index, i, product.create_date)
             i +=1
             if product.active:
                 worksheet.write(row_index, i, 0)

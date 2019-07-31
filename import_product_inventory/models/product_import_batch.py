@@ -65,6 +65,8 @@ class ProductImportBatch(models.Model):
                 for product in data:
                     if not inventory_columns:
                         inventory_columns = list(set(product.keys())-set(product_columns))
+                        if 'create_date' in inventory_columns:
+                            inventory_columns.remove('create_date')
 
                     active = product.get('Archive')
                     category_name = product.get('categ_id/name')
